@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Listado de Géneros{% endblock %}
+
+{# Carga el CSS compartido del proyecto (formularios + tablas) #}
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+    {# ── Encabezado con título y botón de acción ── #}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0">Listado de Géneros</h1>
+        <a href="{% url 'crear_genero_juego' %}" class="btn btn-primary">
+            Crear Género
+        </a>
+    </div>
+
+    {# ── Condicional: muestra tabla solo si existen géneros ── #}
+    {% if genero_juegos %}
+
+        {# Wrapper necesario para aplicar border-radius a la tabla #}
+        <div class="table-glass-wrapper">
+            <table class="table-glass">
+                <thead>
+                    <tr>
+                        <th scope="col">Género</th>
+                        <th scope="col" class="col-acciones">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for genero in genero_juegos %}
+                    {# Fila por cada género registrado #}
+                    <tr>
+                        <td>{{ genero.nombre_genero }}</td>
+                        <td class="col-acciones">
+                            {# Botón editar: lleva al formulario de edición #}
+                            <a href="{% url 'editar_genero_juego' genero.id_genero %}"
+                               class="btn btn-sm btn-warning">
+                                Editar <i class="bi bi-pencil-square"></i>
+                            </a>
+                            {# Botón eliminar: solicita confirmación antes de proceder #}
+                            <a href="{% url 'eliminar_genero_juego' genero.id_genero %}"
+                               class="btn btn-sm btn-danger"
+                               onclick="return confirm('¿Estás seguro de que deseas eliminar este género?');">
+                                Eliminar <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    {% else %}
+
+        {# Banner de estado vacío: no se renderiza la tabla en absoluto #}
+        <div class="text-center py-3 px-4 rounded-3"
+             style="background: rgba(99,102,241,0.10); border: 1px solid rgba(99,102,241,0.25); color: rgba(226,232,240,0.70);">
+            No hay géneros registrados.
+        </div>
+
+    {% endif %}
+
+</div>
+{% endblock %}

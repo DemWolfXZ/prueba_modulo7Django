@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Editar Plataforma{% endblock %}
+
+{% block head %}
+{% load static %}
+{# Carga el CSS de formularios del proyecto #}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="form-card">
+
+        {# Título del formulario #}
+        <h1 class="text-center">Editar Plataforma</h1>
+
+        {# Formulario de edición: método POST con protección CSRF #}
+        <form method="POST" action="{% url 'actualizar_plataforma' plataforma.id_plataforma %}">
+            {% csrf_token %}
+
+            {# Campos generados automáticamente por Django con los datos actuales #}
+            {{ form.as_p }}
+
+            {# Acciones: guardar cambios y volver al listado #}
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-floppy me-1"></i> Guardar Cambios
+                </button>
+                <a href="{% url 'listado_plataforma' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left me-1"></i> Volver
+                </a>
+            </div>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

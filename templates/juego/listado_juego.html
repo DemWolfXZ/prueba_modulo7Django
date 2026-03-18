@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}Listado de Juegos{% endblock %}
+
+{% block head %}
+{% load static %}
+{# CSS compartido del proyecto: formularios, tablas y cards #}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+    {# ── Encabezado con título y botón de acción ── #}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0">Listado de Juegos</h1>
+        <a href="{% url 'crear_juego' %}" class="btn btn-primary">
+            Crear Juego
+        </a>
+    </div>
+
+    {# ── Condicional: muestra grid solo si existen juegos ── #}
+    {% if juegos %}
+
+        <div class="row g-4">
+            {% for juego in juegos %}
+            {# 1 columna en mobile, 2 en tablet/desktop #}
+            <div class="col-12 col-md-6">
+                <div class="card-game h-100">
+                    <div class="row g-0 h-100">
+
+                        {# ── Imagen del juego ── #}
+                        <div class="col-4">
+                            {% if juego.imagen %}
+                            {# Imagen disponible #}
+                            <img src="{{ juego.imagen.url }}"
+                                 class="card-game__img rounded-start"
+                                 alt="{{ juego.nombre_juego }}">
+                            {% else %}
+                            {# Placeholder sin imagen #}
+                            <div class="card-game__no-img rounded-start">
+                                Sin imagen
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        {# ── Información y acciones del juego ── #}
+                        <div class="col-8">
+                            <div class="card-game__body">
+
+                                {# Nombre #}
+                                <p class="card-game__title">{{ juego.nombre_juego }}</p>
+
+                                {# Descripción o fallback #}
+                                <p class="card-game__desc">
+                                    {% if juego.descripcion %}
+                                        {{ juego.descripcion }}
+                                    {% else %}
+                                        Sin descripción.
+                                    {% endif %}
+                                </p>
+
+                                {# Metadatos: género, plataforma, precio #}
+                                <div class="card-game__meta">
+                                    <span>Género: {{ juego.genero }}</span>
+                                    <span>Plataforma: {{ juego.plataforma }}</span>
+                                    <span class="card-game__price">Valor: ${{ juego.precio }}</span>
+                                </div>
+
+                                {# ── Acciones: editar y eliminar ── #}
+                                <div class="card-game__actions">
+                                    {# Botón editar: lleva al formulario de edición #}
+                                    <a href="{% url 'editar_juego' juego.id_juego %}"
+                                       class="btn btn-warning btn-sm d-inline-flex align-items-center gap-1">
+                                        Editar <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    {# Botón eliminar: solicita confirmación antes de proceder #}
+                                    <a href="{% url 'eliminar_juego' juego.id_juego %}"
+                                       class="btn btn-danger btn-sm d-inline-flex align-items-center gap-1"
+                                       onclick="return confirm('¿Estás seguro de que deseas eliminar este juego?');">
+                                        Eliminar <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    {% else %}
+
+        {# Banner de estado vacío #}
+        <div class="text-center py-3 px-4 rounded-3"
+             style="background: rgba(99,102,241,0.10); border: 1px solid rgba(99,102,241,0.25); color: rgba(226,232,240,0.70);">
+            No hay juegos registrados.
+        </div>
+
+    {% endif %}
+
+</div>
+{% endblock %}

@@ -1,0 +1,639 @@
+/* ==========================================================================
+   forms.css
+   Estilos para los formularios de crear y editar del proyecto GameStore.
+   Diseñado para integrarse con el tema gamer oscuro definido en base.css.
+   Estiliza los elementos generados por Django's form.as_p automáticamente.
+   Responsivo y compatible con modo claro y oscuro.
+   ========================================================================== */
+
+/* ─── Contenedor principal del formulario ─── */
+.form-card {
+    /* Glassmorphism coherente con navbar y footer del proyecto */
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(148, 163, 184, 0.14);
+    border-radius: 1.25rem;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 8px 32px rgba(0, 0, 0, 0.30);
+
+    /* Espaciado interno generoso */
+    padding: 2.25rem 2.5rem;
+
+    /* Ancho máximo centrado para no estirarse en pantallas grandes */
+    max-width: 600px;
+    margin: 0 auto;
+
+    /* Animación de entrada suave */
+    animation: formFadeIn 0.35s ease both;
+}
+
+/* ─── Título del formulario ─── */
+.form-card h1,
+.form-card h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #e8eefc;
+    margin-bottom: 1.75rem;
+    padding-bottom: 1rem;
+
+    /* Línea divisoria inferior con degradado índigo → rosa del proyecto */
+    border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+    position: relative;
+}
+
+/* Acento de color bajo el título */
+.form-card h1::after,
+.form-card h2::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 56px;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(99, 102, 241, 0.9), rgba(236, 72, 153, 0.7));
+    border-radius: 999px;
+}
+
+/* ─── Párrafos generados por form.as_p ─── */
+/* Django envuelve cada campo en un <p>, aquí se controla el espaciado */
+.form-card form p {
+    margin-bottom: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+/* ─── Labels de los campos ─── */
+.form-card form label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: rgba(148, 163, 184, 0.90);
+}
+
+/* ─── Inputs, selects y textareas ─── */
+.form-card form input[type="text"],
+.form-card form input[type="email"],
+.form-card form input[type="number"],
+.form-card form input[type="password"],
+.form-card form input[type="url"],
+.form-card form input[type="date"],
+.form-card form input[type="file"],
+.form-card form select,
+.form-card form textarea,
+.form-group textarea {
+    /* Dimensiones y espaciado */
+    width: 100%;
+    padding: 0.65rem 1rem;
+    border-radius: 0.6rem;
+
+    /* Fondo oscuro translúcido */
+    background: rgba(15, 23, 42, 0.60);
+
+    /* Borde sutil que se ilumina al enfocar */
+    border: 1px solid rgba(148, 163, 184, 0.22);
+
+    /* Texto claro */
+    color: #e8eefc;
+    font-size: 0.95rem;
+
+    /* Transición suave en focus */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+
+    /* Elimina estilos del navegador */
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+/* ─── Estado focus: resaltado índigo ─── */
+.form-card form input[type="text"]:focus,
+.form-card form input[type="email"]:focus,
+.form-card form input[type="number"]:focus,
+.form-card form input[type="password"]:focus,
+.form-card form input[type="url"]:focus,
+.form-card form input[type="date"]:focus,
+.form-card form input[type="file"]:focus,
+.form-card form select:focus,
+.form-card form textarea:focus,
+.form-group textarea:focus {
+    border-color: rgba(99, 102, 241, 0.70);
+    background: rgba(15, 23, 42, 0.80);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.18);
+}
+
+/* ─── Placeholder: texto de ayuda en el input ─── */
+.form-card form input::placeholder,
+.form-card form textarea::placeholder {
+    color: rgba(148, 163, 184, 0.45);
+}
+
+/* ─── Select: flecha personalizada ─── */
+.form-card form select {
+    /* Flecha SVG personalizada en color gris claro */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.9rem center;
+    padding-right: 2.5rem;
+    cursor: pointer;
+}
+
+/* ─── Opciones del select: fondo oscuro ─── */
+.form-card form select option {
+    background: #0f172a;
+    color: #e8eefc;
+}
+
+/* ─── Textarea: altura mínima y sin resize horizontal ─── */
+.form-card form textarea,
+.form-group textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+/* ─── Input file: estilo especial ─── */
+.form-card form input[type="file"] {
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+    color: rgba(148, 163, 184, 0.80);
+}
+
+/* Botón interno del input file en navegadores compatibles */
+.form-card form input[type="file"]::file-selector-button {
+    background: rgba(99, 102, 241, 0.20);
+    border: 1px solid rgba(99, 102, 241, 0.35);
+    border-radius: 0.4rem;
+    color: #e8eefc;
+    padding: 0.3rem 0.75rem;
+    margin-right: 0.75rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background 0.2s ease;
+}
+
+.form-card form input[type="file"]::file-selector-button:hover {
+    background: rgba(99, 102, 241, 0.35);
+}
+
+/* ─── Mensajes de error de Django (ul.errorlist) ─── */
+.form-card form ul.errorlist {
+    list-style: none;
+    padding: 0;
+    margin: 0.25rem 0 0;
+}
+
+.form-card form ul.errorlist li {
+    font-size: 0.82rem;
+    color: #f87171;  /* rojo suave coherente con el tema oscuro */
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+/* Ícono de error inline usando CSS */
+.form-card form ul.errorlist li::before {
+    content: '⚠';
+    font-size: 0.78rem;
+}
+
+/* ─── Fila de botones de acción ─── */
+.form-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 1.75rem;
+    padding-top: 1.25rem;
+
+    /* Línea separadora superior */
+    border-top: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+/* ─── Layout de 2 columnas para formularios amplios (ej: juego) ─── */
+
+/* Contenedor sin ancho máximo para aprovechar todo el espacio disponible */
+.form-card--wide {
+    max-width: 960px;
+}
+
+/* Grid de 2 columnas en pantallas medianas y grandes */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 2rem;
+}
+
+/* Clase para que un campo ocupe las 2 columnas completas */
+.form-grid .form-col-full {
+    grid-column: 1 / -1;
+}
+
+/* Columna derecha con flex para que los campos puedan estirarse */
+.form-grid .form-col-right {
+    display: flex;
+    flex-direction: column;
+}
+
+/* En mobile el grid colapsa a 1 columna */
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    .form-card--wide {
+        max-width: 100%;
+    }
+}
+
+/* ─── Grupo de campo manual (label + input + errores) ─── */
+/* Reemplaza los <p> de form.as_p cuando se renderizan campos individuales */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+}
+
+/* Label del grupo: mismo estilo que los generados por form.as_p */
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: rgba(148, 163, 184, 0.90);
+}
+
+/* Mensaje de error por campo individual */
+.form-group .field-errors {
+    font-size: 0.82rem;
+    color: #f87171;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.15rem;
+}
+
+.form-group .field-errors::before {
+    content: "a0";
+    font-size: 0.78rem;
+}
+
+/* Textarea que crece para ocupar el alto disponible en su columna */
+.form-group textarea.textarea-grow {
+    flex: 1;
+    min-height: 148px;
+    resize: vertical;
+}
+
+/* ─── Animación de entrada del formulario ─── */
+@keyframes formFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ─── Responsivo: ajuste en pantallas pequeñas ─── */
+@media (max-width: 576px) {
+    /* Reduce padding en mobile */
+    .form-card {
+        padding: 1.5rem 1.25rem;
+        border-radius: 1rem;
+    }
+
+    /* Botones ocupan ancho completo en mobile */
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions .btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* ─── Modo claro: override para sistema con light mode ─── */
+@media (prefers-color-scheme: light) {
+    .form-card {
+        background: rgba(255, 255, 255, 0.88);
+        border-color: rgba(99, 102, 241, 0.18);
+        box-shadow: 0 4px 24px rgba(99, 102, 241, 0.08);
+    }
+
+    .form-card h1,
+    .form-card h2 {
+        color: #1e2a3a;
+    }
+
+    .form-card form label {
+        color: rgba(30, 42, 58, 0.75);
+    }
+
+    .form-card form input[type="text"],
+    .form-card form input[type="email"],
+    .form-card form input[type="number"],
+    .form-card form input[type="password"],
+    .form-card form input[type="url"],
+    .form-card form input[type="date"],
+    .form-card form input[type="file"],
+    .form-card form select,
+    .form-card form textarea,
+.form-group textarea {
+        background: rgba(241, 245, 249, 0.90);
+        border-color: rgba(99, 102, 241, 0.22);
+        color: #1e2a3a;
+    }
+
+    .form-card form input::placeholder,
+    .form-card form textarea::placeholder {
+        color: rgba(30, 42, 58, 0.35);
+    }
+
+    .form-card form select option {
+        background: #f1f5f9;
+        color: #1e2a3a;
+    }
+}
+/* ==========================================================================
+   tables.css
+   Estilos para las tablas de listado del proyecto GameStore.
+   Reemplaza table-dark de Bootstrap con glassmorphism coherente con base.css.
+   Responsivo y compatible con modo claro y oscuro.
+   ========================================================================== */
+
+/* ─── Wrapper que envuelve la tabla para aplicar bordes redondeados ─── */
+/* Necesario porque border-radius no aplica directamente a <table> con overflow #}*/
+.table-glass-wrapper {
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 1px solid rgba(148, 163, 184, 0.14);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+/* ─── Tabla base: quita todos los estilos de Bootstrap ─── */
+.table-glass {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+    font-size: 0.95rem;
+    color: #e8eefc;
+
+    /* Fondo base muy sutil, translúcido */
+    background: transparent;
+}
+
+/* ─── Cabecera de la tabla ─── */
+.table-glass thead tr {
+    /* Fondo del header con índigo muy tenue */
+    background: rgba(99, 102, 241, 0.12);
+    border-bottom: 1px solid rgba(99, 102, 241, 0.25);
+}
+
+.table-glass thead th {
+    padding: 0.85rem 1.1rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+
+    /* Color del texto del header: blanco apagado */
+    color: rgba(148, 163, 184, 0.90);
+
+    /* Sin borde propio, el separador lo da el tr */
+    border: none;
+    white-space: nowrap;
+}
+
+/* ─── Filas del cuerpo ─── */
+.table-glass tbody tr {
+    /* Fondo alternado muy sutil para legibilidad */
+    background: rgba(15, 23, 42, 0.30);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+    transition: background 0.18s ease;
+}
+
+/* Fila par: levemente más claro */
+.table-glass tbody tr:nth-child(even) {
+    background: rgba(15, 23, 42, 0.50);
+}
+
+/* Última fila sin borde inferior */
+.table-glass tbody tr:last-child {
+    border-bottom: none;
+}
+
+/* ─── Hover sobre las filas ─── */
+.table-glass tbody tr:hover {
+    background: rgba(99, 102, 241, 0.10);
+    cursor: default;
+}
+
+/* ─── Celdas ─── */
+.table-glass tbody td {
+    padding: 0.8rem 1.1rem;
+    vertical-align: middle;
+    border: none;
+    color: rgba(226, 232, 240, 0.88);
+}
+
+/* ─── Columna de acciones: alineada a la izquierda y sin wrap ─── */
+.table-glass .col-acciones {
+    white-space: nowrap;
+    width: 1%;         /* hace que la columna sea lo más angosta posible */
+}
+
+/* ─── Responsivo: scroll horizontal en pantallas pequeñas ─── */
+@media (max-width: 576px) {
+    /* Wrapper scrollable en mobile */
+    .table-glass-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: 0.75rem;
+    }
+
+    /* Reduce padding de celdas en mobile */
+    .table-glass thead th,
+    .table-glass tbody td {
+        padding: 0.65rem 0.85rem;
+        font-size: 0.88rem;
+    }
+}
+
+/* ─── Modo claro: override para sistema con light mode ─── */
+@media (prefers-color-scheme: light) {
+    .table-glass-wrapper {
+        border-color: rgba(99, 102, 241, 0.18);
+        box-shadow: 0 4px 24px rgba(99, 102, 241, 0.08);
+    }
+
+    .table-glass thead tr {
+        background: rgba(99, 102, 241, 0.08);
+        border-bottom-color: rgba(99, 102, 241, 0.20);
+    }
+
+    .table-glass thead th {
+        color: rgba(30, 42, 58, 0.65);
+    }
+
+    .table-glass tbody tr {
+        background: rgba(255, 255, 255, 0.75);
+        border-bottom-color: rgba(99, 102, 241, 0.08);
+    }
+
+    .table-glass tbody tr:nth-child(even) {
+        background: rgba(241, 245, 249, 0.80);
+    }
+
+    .table-glass tbody tr:hover {
+        background: rgba(99, 102, 241, 0.06);
+    }
+
+    .table-glass tbody td {
+        color: #1e2a3a;
+    }
+}
+/* ==========================================================================
+   Cards de juegos — listado_juego.html y listado_juego_cliente.html
+   Reemplaza el fondo blanco de Bootstrap con glassmorphism del proyecto.
+   ========================================================================== */
+
+/* ─── Card base: fondo translúcido oscuro ─── */
+.card-game {
+    background: rgba(15, 23, 42, 0.55);
+    border: 1px solid rgba(148, 163, 184, 0.14);
+    border-radius: 1rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+/* Hover: leve elevación y borde índigo */
+.card-game:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+    border-color: rgba(99, 102, 241, 0.35);
+}
+
+/* ─── Imagen del juego ─── */
+.card-game .card-game__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    min-height: 160px;
+}
+
+/* Placeholder cuando no hay imagen */
+.card-game .card-game__no-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 160px;
+    height: 100%;
+    background: rgba(99, 102, 241, 0.08);
+    color: rgba(148, 163, 184, 0.50);
+    font-size: 0.85rem;
+}
+
+/* ─── Cuerpo de la card ─── */
+.card-game .card-game__body {
+    padding: 1.1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    color: #e8eefc;
+}
+
+/* Título del juego */
+.card-game .card-game__title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #e8eefc;
+    margin-bottom: 0.5rem;
+}
+
+/* Descripción del juego */
+.card-game .card-game__desc {
+    font-size: 0.88rem;
+    color: rgba(226, 232, 240, 0.70);
+    line-height: 1.55;
+    margin-bottom: 0.85rem;
+    flex: 1;
+}
+
+/* ─── Metadatos: género, plataforma, precio ─── */
+.card-game .card-game__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    margin-bottom: 1rem;
+}
+
+.card-game .card-game__meta span {
+    font-size: 0.80rem;
+    color: rgba(148, 163, 184, 0.75);
+}
+
+/* Precio con acento de color */
+.card-game .card-game__price {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(99, 102, 241, 0.90) !important;
+}
+
+/* ─── Botones de acción al pie de la card ─── */
+.card-game .card-game__actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(148, 163, 184, 0.10);
+}
+
+/* ─── Responsivo: en mobile la card apila imagen arriba y contenido abajo ─── */
+@media (max-width: 576px) {
+    .card-game .card-game__img,
+    .card-game .card-game__no-img {
+        min-height: 120px;
+    }
+}
+
+/* ─── Modo claro ─── */
+@media (prefers-color-scheme: light) {
+    .card-game {
+        background: rgba(255, 255, 255, 0.88);
+        border-color: rgba(99, 102, 241, 0.18);
+        box-shadow: 0 4px 24px rgba(99, 102, 241, 0.08);
+    }
+
+    .card-game:hover {
+        border-color: rgba(99, 102, 241, 0.35);
+    }
+
+    .card-game .card-game__title {
+        color: #1e2a3a;
+    }
+
+    .card-game .card-game__desc {
+        color: rgba(30, 42, 58, 0.65);
+    }
+
+    .card-game .card-game__meta span {
+        color: rgba(30, 42, 58, 0.55);
+    }
+
+    .card-game .card-game__no-img {
+        background: rgba(99, 102, 241, 0.05);
+        color: rgba(30, 42, 58, 0.35);
+    }
+
+    .card-game .card-game__actions {
+        border-top-color: rgba(30, 42, 58, 0.08);
+    }
+}
+
+

@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block title %}Crear Juego{% endblock %}
+
+{% block head %}
+{% load static %}
+{# Carga el CSS de formularios del proyecto #}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    {# form-card--wide amplía el max-width para el layout de 2 columnas #}
+    <div class="form-card form-card--wide">
+
+        {# Título del formulario #}
+        <h1 class="text-center">Crear Juego</h1>
+
+        {# enctype multipart obligatorio para el campo de imagen #}
+        <form method="POST" action="{% url 'crear_juego' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {# ── Grid de 2 columnas ── #}
+            <div class="form-grid">
+
+                {# ══ COLUMNA IZQUIERDA ══ #}
+                <div>
+
+                    {# Campo: Nombre del juego #}
+                    <div class="form-group">
+                        <label for="{{ form.nombre_juego.id_for_label }}">
+                            {{ form.nombre_juego.label }}
+                        </label>
+                        {# Renderiza el widget del campo con sus atributos definidos en el ModelForm #}
+                        {{ form.nombre_juego }}
+                        {# Muestra errores de validación si los hay #}
+                        {% if form.nombre_juego.errors %}
+                            <span class="field-errors">{{ form.nombre_juego.errors|join:", " }}</span>
+                        {% endif %}
+                    </div>
+
+                    {# Campo: Género del juego #}
+                    <div class="form-group">
+                        <label for="{{ form.genero.id_for_label }}">
+                            {{ form.genero.label }}
+                        </label>
+                        {{ form.genero }}
+                        {% if form.genero.errors %}
+                            <span class="field-errors">{{ form.genero.errors|join:", " }}</span>
+                        {% endif %}
+                    </div>
+
+                    {# Campo: Plataforma del juego #}
+                    <div class="form-group">
+                        <label for="{{ form.plataforma.id_for_label }}">
+                            {{ form.plataforma.label }}
+                        </label>
+                        {{ form.plataforma }}
+                        {% if form.plataforma.errors %}
+                            <span class="field-errors">{{ form.plataforma.errors|join:", " }}</span>
+                        {% endif %}
+                    </div>
+
+                    {# Campo: Precio del juego #}
+                    <div class="form-group">
+                        <label for="{{ form.precio.id_for_label }}">
+                            {{ form.precio.label }}
+                        </label>
+                        {{ form.precio }}
+                        {% if form.precio.errors %}
+                            <span class="field-errors">{{ form.precio.errors|join:", " }}</span>
+                        {% endif %}
+                    </div>
+
+                </div>{# /columna izquierda #}
+
+                {# ══ COLUMNA DERECHA ══ #}
+                <div class="form-col-right">
+
+                    {# Campo: Descripción del juego (textarea que ocupa más altura) #}
+                    <div class="form-group" style="flex: 1; display: flex; flex-direction: column;">
+                        <label for="{{ form.descripcion.id_for_label }}">
+                            {{ form.descripcion.label }}
+                        </label>
+                        {# textarea-grow hace que el textarea ocupe el alto disponible #}
+                        <textarea name="descripcion"
+                                  id="{{ form.descripcion.id_for_label }}"
+                                  class="textarea-grow"
+                                  rows="4">{{ form.descripcion.value|default:'' }}</textarea>
+                        {% if form.descripcion.errors %}
+                            <span class="field-errors">{{ form.descripcion.errors|join:", " }}</span>
+                        {% endif %}
+                    </div>
+
+                    {# Campo: Imagen del juego #}
+                    <div class="form-group">
+                        <label for="{{ form.imagen.id_for_label }}">
+                            {{ form.imagen.label }}
+                        </label>
+                        {{ form.imagen }}
+                        {% if form.imagen.errors %}
+                            <span class="field-errors">{{ form.imagen.errors|join:", " }}</span>
+                        {% endif %}
+                    </div>
+
+                </div>{# /columna derecha #}
+
+            </div>{# /form-grid #}
+
+            {# ── Acciones: guardar y volver al listado ── #}
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-floppy me-1"></i> Guardar
+                </button>
+                <a href="{% url 'listado_juegos' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left me-1"></i> Volver
+                </a>
+            </div>
+
+        </form>
+    </div>
+</div>
+{% endblock %}

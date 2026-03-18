@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}Carrito de compras{% endblock %}
+
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+    {# ── Título ── #}
+    <h1 class="mb-4">Carrito de compras</h1>
+
+    {# ── form-card envuelve todo para que el select tome los estilos ── #}
+    <div class="form-card form-card--wide">
+        <form method="POST" action="{% url 'confirmar_compra' %}">
+            {% csrf_token %}
+
+            {# Selector de cliente #}
+            <div class="form-group">
+                <label>{{ form.cliente.label }}</label>
+                {{ form.cliente }}
+                {% if form.cliente.errors %}
+                    <span class="field-errors">{{ form.cliente.errors|join:", " }}</span>
+                {% endif %}
+            </div>
+
+            {# ── Tabla del carrito ── #}
+            {% if carrito %}
+
+                <div class="table-glass-wrapper">
+                    <table class="table-glass">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nombre Juego</th>
+                                <th scope="col">Precio</th>
+                                <th scope="col">Cantidad</th>
+                                <th scope="col">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for key, item in carrito.items %}
+                            <tr>
+                                <td>{{ item.nombre }}</td>
+                                <td>{{ item.precio }}</td>
+                                <td>
+                                    <a href="{% url 'disminuir' key %}" class="btn btn-danger btn-sm">
+                                        <i class="bi bi-dash"></i>
+                                    </a>
+                                    {{ item.cantidad }}
+                                    <a href="{% url 'aumentar' key %}" class="btn btn-success btn-sm">
+                                        <i class="bi bi-plus"></i>
+                                    </a>
+                                </td>
+                                <td>{{ item.subtotal }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3">Total</td>
+                                <td>{{ total }}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                {# Botón confirmar #}
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-bag-check me-1"></i> Confirmar compra
+                    </button>
+                </div>
+
+            {% else %}
+
+                <div class="text-center py-3 px-4 rounded-3"
+                    style="background: rgba(99,102,241,0.10); border: 1px solid rgba(99,102,241,0.25); color: rgba(226,232,240,0.70);">
+                    No hay productos en el carrito.
+                </div>
+
+            {% endif %}
+
+        </form>
+    </div>
+
+</div>
+{% endblock %}

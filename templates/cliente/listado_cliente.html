@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Listado de Clientes{% endblock %}
+
+{# Carga el CSS compartido del proyecto (formularios + tablas) #}
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+    {# ── Encabezado con título y botón de acción ── #}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0">Listado de Clientes</h1>
+        <a href="{% url 'crear_cliente' %}" class="btn btn-primary">
+            Crear Cliente
+        </a>
+    </div>
+
+    {# ── Condicional: muestra tabla solo si existen clientes ── #}
+    {% if clientes %}
+
+        {# Wrapper necesario para aplicar border-radius a la tabla #}
+        <div class="table-glass-wrapper">
+            <table class="table-glass">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre Cliente</th>
+                        <th scope="col">Correo Cliente</th>
+                        <th scope="col" class="col-acciones">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cliente in clientes %}
+                    {# Fila por cada cliente registrado #}
+                    <tr>
+                        <td>{{ cliente.nombre_cliente }}</td>
+                        <td>{{ cliente.correo }}</td>
+                        <td class="col-acciones">
+                            {# Botón editar: lleva al formulario de edición del cliente #}
+                            <a href="{% url 'editar_cliente' cliente.id_cliente %}"
+                               class="btn btn-sm btn-warning">
+                                Editar <i class="bi bi-pencil-square"></i>
+                            </a>
+                            {# Botón eliminar: solicita confirmación antes de proceder #}
+                            <a href="{% url 'eliminar_cliente' cliente.id_cliente %}"
+                               class="btn btn-sm btn-danger"
+                               onclick="return confirm('¿Estás seguro de que deseas eliminar este cliente?');">
+                                Eliminar <i class="bi bi-trash3"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    {% else %}
+
+        {# Banner de estado vacío: no se renderiza la tabla en absoluto #}
+        <div class="text-center py-3 px-4 rounded-3"
+             style="background: rgba(99,102,241,0.10); border: 1px solid rgba(99,102,241,0.25); color: rgba(226,232,240,0.70);">
+            No hay clientes registrados.
+        </div>
+
+    {% endif %}
+
+</div>
+{% endblock %}

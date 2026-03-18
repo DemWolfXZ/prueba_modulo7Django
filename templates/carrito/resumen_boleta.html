@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}Resumen boleta{% endblock %}
+
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="form-card form-card--wide">
+
+        {# ── Encabezado de la boleta ── #}
+        <h1>Resumen de compra #{{ boleta.id_boleta }}</h1>
+        <p class="card-text">
+            <strong>Cliente:</strong> {{ boleta.cliente.nombre_cliente }}
+        </p>
+        <p class="card-text">
+            <strong>Fecha:</strong> {{ boleta.fecha_compra|date:"d/m/Y H:i" }}
+        </p>
+
+        {# ── Cards de juegos comprados ── #}
+        {% for detalle in detalles %}
+        <div class="card-game mb-3">
+            <div class="row g-0">
+
+                {# Imagen del juego #}
+                <div class="col-md-2">
+                    {% if detalle.juego.imagen %}
+                        <img src="{{ detalle.juego.imagen.url }}"
+                             class="card-game__img rounded-start"
+                             alt="{{ detalle.juego.nombre_juego }}">
+                    {% else %}
+                        <div class="card-game__no-img rounded-start">
+                            Sin imagen
+                        </div>
+                    {% endif %}
+                </div>
+
+                {# Datos del juego #}
+                <div class="col-md-10">
+                    <div class="card-game__body">
+                        <p class="card-game__title">{{ detalle.juego.nombre_juego }}</p>
+                        <div class="card-game__meta">
+                            <span>Plataforma: {{ detalle.juego.plataforma }}</span>
+                            <span>Precio unitario: ${{ detalle.precio_unitario }}</span>
+                            <span>Cantidad: {{ detalle.cantidad }}</span>
+                            <span class="card-game__price">Subtotal: ${{ detalle.subtotal }}</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+
+        {# ── Total y acciones ── #}
+        <div class="form-actions">
+            <div class="me-auto">
+                <strong style="color: #e8eefc; font-size: 1.1rem;">
+                    Total: ${{ boleta.total_boleta }}
+                </strong>
+            </div>
+            <a href="{% url 'listado_juegos_cliente' %}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left me-1"></i> Volver al catálogo
+            </a>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

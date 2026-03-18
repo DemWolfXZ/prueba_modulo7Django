@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Tienda{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <!-- CSS propio -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-glass sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'index' %}">
+                <!-- Ícono simple  -->
+                <span class="brand-icon">
+                    🎮
+                </span>
+                <span>GameStore</span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-lg-1">
+
+                    <li class="nav-item">
+                        <a class="nav-link {% block nav_Juegos %}{% endblock %}" href="{% url 'listado_juegos_cliente' %}">Juegos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% block nav_Plataforma %}{% endblock %}" href="{% url 'listado_plataforma' %}">Plataforma</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% block nav_Genero %}{% endblock %}" href="{% url 'listado_generos_juego' %}">Genero</a>
+                    </li>
+                </ul>
+
+                <div class="d-flex gap-2 mt-3 mt-lg-0">
+                    <a class="btn btn-outline-light btn-sm rounded-3" href="{% url 'mostrar_carrito' %}">
+                        <i class="bi bi-cart"></i> Ver carrito 
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container page-wrap">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer py-4 mt-auto">
+        <div class="container">
+            <div class="row g-3 align-items-center">
+                <div class="col-md-6">
+                    <div class="fw-semibold">GameStore</div>
+                    <div class="small text-white-50">Tu tienda gamer — juegos, accesorios y más.</div>
+                </div>
+
+                <div class="col-md-6 text-md-end">
+                    <a class="footer-link me-3" href="{% url 'listado_juegos' %}">Juegos (Trabajadores)</a>
+                    <a class="footer-link me-3" href="{% url 'listado_boleta' %}">Pedidos</a>
+                    <a class="footer-link" href="{% url 'listado_clientes' %}">Clientes</a>
+
+                    <div class="small text-white-50 mt-2">
+                        © {% now "Y" %} GameStore. Todos los derechos reservados.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
