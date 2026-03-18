@@ -1,0 +1,33 @@
+# Entorno virtual
+env/
+venv/
+.env
+.env.*
+
+# Base de datos local
+db.sqlite3
+
+# Archivos de media (subidos en runtime)
+media/
+
+# Editor personal
+.vscode/
+.idea/
+
+# Python compilado
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+
+
+# Static generado por collectstatic (si aplica)
+# static/   ← descomenta solo si usas collectstatic
+
+# Logs
+*.log
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
